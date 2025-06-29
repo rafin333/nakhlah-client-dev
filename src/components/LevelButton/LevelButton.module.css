@@ -1,0 +1,62 @@
+.levelButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 12%;
+  /* Slightly larger width based on parent container */
+  height: 12%;
+  /* Slightly larger height based on parent container */
+}
+
+.levelButtonInner,
+.lockButtonInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* border: none; */
+  /* border-radius: 50%; */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  /* Slightly larger font size */
+  text-align: center;
+  width: 10em;
+  /* Slightly larger width */
+  height: 10em;
+  /* Slightly larger height to maintain circular shape */
+  transition: all 0.3s ease;
+}
+
+.levelButtonInner {
+  /* background: linear-gradient(135deg, #7f00be, #e100ff); */
+  background-image: url(/image/Task_unlocked.svg);
+  /* box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0); */
+  cursor: pointer;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* .levelButtonInner:hover {
+  background: linear-gradient(135deg, #a600f7, #ff4efb);
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 0.75em 1.25em rgba(0, 0, 0, 0.4);
+} */
+
+.lockButtonInner {
+    background-image: url(/image/Task_locked.svg);
+    cursor: pointer;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+} 
+  
+/* .lockButtonInner:hover {
+  background: linear-gradient(135deg, #999, #ccc);
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 0.75em 1.25em rgba(0, 0, 0, 0.3);
+} */

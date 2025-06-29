@@ -1,0 +1,13 @@
+{
+  "login": "Masuk",
+  "username": "Nama Pengguna",
+  "password": "Kata Sandi",
+  "confirmPassword": "Confirm Kata Sandi",
+  "rememberMe": "Ingat saya",
+  "forgotPassword": "Lupa kata sandi Anda?",
+  "signIn": "Masuk",
+  "error": "Kesalahan",
+  "success": "Berhasil",
+  "register": "Daftar",
+  "emailAddress": "Alamat Email"
+}

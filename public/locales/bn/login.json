@@ -1,0 +1,13 @@
+{
+  "login": "লগইন",
+  "username": "ইউজারনেম",
+  "password": "পাসওয়ার্ড",
+  "confirmPassword": "Confirm পাসওয়ার্ড",
+  "rememberMe": "মনে রেখো",
+  "forgotPassword": "আপনি কি আপনার পাসওয়ার্ড ভুলে গেছেন?",
+  "signIn": "সাইন ইন",
+  "register": "নিবন্ধনকরণ",
+  "emailAddress": "ইমেইল ঠিকানা",
+  "error": "ত্রুটি",
+  "success": "সাফল্য"
+}

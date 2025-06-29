@@ -1,0 +1,44 @@
+@keyframes rotateInScale {
+    0% {
+      opacity: 0;
+      transform: rotate(-30deg) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+  
+  .tooltipContainer {
+    position: relative;
+  }
+  .tooltipContainer {
+    position: absolute;
+    top: 0;      /* Move to top */
+    right: 0;    /* Align to right */
+    margin-top: 8px;
+    margin-right: 8px;
+  }
+  
+  .tooltipContainer .tooltipText {
+    visibility: hidden;
+    background-color: #c9a2e7;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 2px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Adjust the position as needed */
+    left: 50%;
+    margin-left: -75px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  .tooltipContainer:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+  }
+  
