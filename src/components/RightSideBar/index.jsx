@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
   Card,
@@ -65,6 +65,7 @@ import Lottie from "lottie-web";
 import useHandleLearnerGamification from "@/utils/learnerGamifications";
 import { useGetGamificationTxesQuery } from "@/redux/features/gamificationTxes/gamificationTxes";
 import { TRANSACTION_NAMES } from "@/constants/transactionNames";
+import ThemeContext from "../context/themeContext";
 
 const RightSidebar = () => {
   const dispatch = useDispatch();
@@ -156,10 +157,24 @@ const RightSidebar = () => {
     router.push("/quests"); // Redirect to the store page
   };
 
+
+  const context = useContext(ThemeContext);
+  const { token } = context;
   const handleStreakSeeAllClick = () => {
-    var raw = { missedDaysToRestore: missedCount };
-    var requestOptions = {
+
+    if (!token) {
+      console.log("No token found. User might not be logged in.");
+      return;
+    }
+
+    const raw = { missedDaysToRestore: missedCount };
+
+    const requestOptions = {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(raw),
       redirect: "follow",
     };
@@ -168,10 +183,14 @@ const RightSidebar = () => {
       process.env.NEXT_PUBLIC_API_BASE_URL + "restore-streak?populate=*",
       requestOptions
     )
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) throw new Error("Unauthorized or other error");
+        return response.json();
+      })
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   };
+
   const [quests, setQuests] = useState([
     { id: 1, task: "Complete a lesson", completed: false, xp: 50 },
     { id: 2, task: "Take a short quiz", completed: false, xp: 30 },
@@ -347,7 +366,7 @@ const RightSidebar = () => {
             </button> */}
               <div
                 className="grid grid-cols-3 gap-2 cursor-pointer"
-                // onClick={handleStreakSeeAllClick}
+              // onClick={handleStreakSeeAllClick}
               >
                 <div className="col-span-1 ">
                   <Image
@@ -378,7 +397,7 @@ const RightSidebar = () => {
                 {/* <Flame size={32} color="#1d1b1b" strokeWidth={2.25} absoluteStrokeWidth /> */}
                 {streakDates?.map((data) =>
                   data?.status === "completed" ||
-                  data?.status === "restored" ? (
+                    data?.status === "restored" ? (
                     <>
                       {/* <Flame
                         size={40}
@@ -435,8 +454,7 @@ const RightSidebar = () => {
               {hasMissedStatus && (
                 <div className="mt-4 text-center">
                   <Button
-                    color="white"
-                    style={{ color: "black" }}
+                    className="popbuttonWarning"
                     onClick={handleStreakSeeAllClick}
                   >
                     Restore
@@ -485,6 +503,45 @@ const RightSidebar = () => {
             </Typography>
           </CardBody>
         </Card>
+
+
+        {/* <Card
+          className="mb-4"
+          style={{ borderRadius: "10px", backgroundColor: "#fbd687" }}
+        >
+          <CardBody>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
+              <Typography className="font-extrabold text-lg text-brown-800">
+                {rightSideBarT("dailyQuests")}
+              </Typography>
+ 
+          <button
+            className="text-sm text-white bg-brown-600 px-3 py-1 rounded hover:underline"
+            onClick={handleQuestViewAllClick}
+          >
+            {rightSideBarT("seeDetails")}
+          </button>  
+         
+            </div>
+
+            <Typography className="text-sm text-gray-800 mt-2">
+              {rightSideBarT("participateInDailyQuests")}
+            </Typography>
+
+            <ul className="mt-3 space-y-2 text-xs text-gray-900">
+              {questData?.tasks.map((quest, index) => (
+                <li key={index} className="flex items-center space-x-3">
+                  {quest.status ? (
+                    <CircleCheck className="text-green-600 w-4 h-4" />
+                  ) : (
+                    <Circle className="text-gray-400 w-4 h-4" />
+                  )}
+                  <span>{quest.task}</span>
+                </li>
+              ))}
+            </ul>
+          </CardBody>
+        </Card> */}
 
         {/* //////////////////////////////////// Leaderboard Position ////////////////////////////////  */}
 
