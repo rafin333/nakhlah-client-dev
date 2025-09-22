@@ -50,44 +50,38 @@ const App = ({ Component, pageProps }) => {
 
   if (typeof window !== undefined) {
     if (!token) {
-      console.log(accessToken, token);
-      return (
-        <>
-          {/* <Script
-            src="https://code.responsivevoice.org/responsivevoice.js?key=MsWPQFPp"
-            strategy="afterInteractive"
-            onLoad={() => setIsResponsiveVoiceLoaded(true)}
-          /> */}
-          {loading ? (
-            <Loader />
-          ) : (
-            <GoogleOAuthProvider clientId="802793018966-n25ue3risp6t94o7njfh5tqvl5jhvjuu.apps.googleusercontent.com">
-              <Provider store={store}>
-                {/* {
-                route === '/auth/register' &&(
-                  <RegisterForm/>
-                )
-              } */}
-                {route === "/privacyterms" && <PrivacyTerms />}
-                {route === "/query" && <Query />}
-                {route === "/" && <Landing />}
+  console.log(accessToken, token);
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <GoogleOAuthProvider clientId="YOUR_CLIENT_ID">
+          <Provider store={store}>
+            {route === "/privacyterms" && <PrivacyTerms />}
+            {route === "/query" && <Query />}
+            {route === "/" && <Landing />}
+            
+            {/* Add this line for reset password */}
+            {route === "/reset-password" && <Component {...pageProps} />}
 
-                <ToastContainer
-                  position="top-right"
-                  autoClose={3000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  draggable={false}
-                  closeOnClick
-                  pauseOnHover
-                  transition={Slide}
-                />
-              </Provider>
-            </GoogleOAuthProvider>
-          )}
-        </>
-      );
-    }
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              draggable={false}
+              closeOnClick
+              pauseOnHover
+              transition={Slide}
+            />
+          </Provider>
+        </GoogleOAuthProvider>
+      )}
+    </>
+  );
+}
+
   }
 
   return (
