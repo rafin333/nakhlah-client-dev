@@ -54,6 +54,40 @@
     background-repeat: no-repeat;
     background-size: contain;
 } 
+
+/* Mystery box unlocked */
+.mysteryButtonInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 6em;
+  height: 6em;
+  background-image: url(/image/mystery_box_unlocked.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* Mystery box locked */
+.mysteryLockButtonInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 5em;
+  height: 5em;
+  background-image: url(/image/mystery_box_locked.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: default; /* locked, not clickable */
+}
+
+
   
 /* .lockButtonInner:hover {
   background: linear-gradient(135deg, #999, #ccc);
