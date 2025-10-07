@@ -202,137 +202,254 @@ const MatchingQuestion = ({
       // console.log(allContentOptions[0]?.attributes?.content_details?.data);
     }
   }, [questionDetails?.id]);
+
+  // return (
+  //   <div className="max-w-3xl mx-auto px-4 py-4">
+  //     <div className=" mb-4">
+  //       {isRepeatedQuestion && (
+  //         <div className=" flex text-sm items-center font-bold text-gray-700 mb-4">
+  //           <Image
+  //             alt="previousQuestion"
+  //             height={1}
+  //             width={38}
+  //             src={"/icons/All Icon/Lesson page/Previous mistake question.svg"}
+  //           />&nbsp; Previous mistake questions
+  //         </div>
+  //       )}
+  //     </div>
+  //     <div className="flex justify-center items-center mb-4">
+  //       <div className="text-xl font-bold text-gray-700 mb-4">
+  //         <div dangerouslySetInnerHTML={{ __html: updatedTitle }} />
+  //       </div>
+  //     </div>
+  //     <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
+  //       <div>
+  //         {questionContentOptions.map((option) => (
+  //           <div className="relative" key={option.id}>
+  //             <div
+  //               className={`p-4 mb-2 rounded-lg font-bold border-4 border-lavender-300 flex items-center ${
+  //                 matchedOptions.includes(option.id)
+  //                   ? "bg-lavender-100"
+  //                   : selectedContentOption === option.id
+  //                   ? "bg-lavender-600 text-white"
+  //                   : "bg-white"
+  //               }`}
+  //               onClick={() => handleContentOptionClick(option.id)}
+  //               style={{
+  //                 boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+  //                 cursor:
+  //                   matchedOptions.includes(option.id) || allOptionsMatched
+  //                     ? "default"
+  //                     : "pointer",
+  //               }}
+  //             >
+  //               <div className="flex-1 text-center">{option?.title}</div>
+  //               {matchedOptions.includes(option.id) && (
+  //                 <FaCheckCircle className="text-green-500 ml-2" />
+  //               )}
+  //               {/* {selectedContentOption === option.id &&
+  //                 !matchedOptions.includes(option.id) && (
+  //                   <FaTimesCircle className="text-red-500 ml-2" />
+  //                 )} */}
+  //               {selectedContentOption === option.id &&
+  //                 !matchedOptions.includes(option.id) &&
+  //                 showCrossIcon && ( // Show cross icon only on mismatch
+  //                   <FaTimesCircle className="text-red-500 ml-2" />
+  //                 )}
+  //             </div>
+  //             {option?.pronunciation && (
+  //               <div className={styles.tooltipContainer}>
+  //                 <FaInfoCircle
+  //                   size={12}
+  //                   color="lavender"
+  //                   className="cursor-pointer"
+  //                 />
+  //                 <span className={styles.tooltipText}>
+  //                   {option?.pronunciation ? option?.pronunciation : ""}
+  //                 </span>
+  //               </div>
+  //             )}
+  //           </div>
+  //         ))}
+  //       </div>
+  //       <div>
+  //         {languageTitles.map((languageOption, index) => (
+  //           <div className="relative" key={languageOption?.id}>
+  //             <div
+  //               className={`p-4 mb-2 rounded-lg text-center border-4 border-lavender-300 flex items-center ${
+  //                 matchedOptions.includes(languageOption?.id)
+  //                   ? "bg-lavender-100"
+  //                   : selectedLanguageOption === languageOption?.id
+  //                   ? "bg-lavender-600 text-white"
+  //                   : "bg-white"
+  //               }`}
+  //               onClick={() => handleLanguageOptionClick(languageOption?.id)}
+  //               style={{
+  //                 boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+  //                 cursor:
+  //                   matchedOptions.includes(languageOption?.id) ||
+  //                   allOptionsMatched
+  //                     ? "default"
+  //                     : "pointer",
+  //               }}
+  //             >
+  //               <div className="flex-1 text-center">
+  //                 {languageOption ? languageOption.title : "Not found"}
+  //               </div>
+  //               {matchedOptions.includes(languageOption?.id) && (
+  //                 <FaCheckCircle className="text-green-500 ml-2" />
+  //               )}
+  //               {/* {selectedLanguageOption === languageOption?.id &&
+  //                 !matchedOptions.includes(languageOption?.id) && (
+  //                   <FaTimesCircle className="text-red-500 ml-2" />
+  //                 )} */}
+  //               {selectedLanguageOption === languageOption.id &&
+  //                 !matchedOptions.includes(languageOption.id) &&
+  //                 showCrossIcon && ( // Show cross icon only on mismatch
+  //                   <FaTimesCircle className="text-red-500 ml-2" />
+  //                 )}
+  //             </div>
+  //             {languageTitles?.pronunciation && (
+  //               <div className={styles.tooltipContainer}>
+  //                 <FaInfoCircle
+  //                   size={12}
+  //                   color="lavender"
+  //                   className="cursor-pointer"
+  //                 />
+  //                 <span className={styles.tooltipText}>
+  //                   {languageTitles?.pronunciation
+  //                     ? languageTitles?.pronunciation
+  //                     : ""}
+  //                 </span>
+  //               </div>
+  //             )}
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //     {/*<div className="mt-4">
+  //       {allOptionsMatched && (
+  //         <p className="text-green-500">All matches are correct!</p>
+  //       )}
+  //       </div>*/}
+  //   </div>
+  // );
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-4">
-      <div className=" mb-4">
-        {isRepeatedQuestion && (
-          <div className=" flex text-sm items-center font-bold text-gray-700 mb-4">
-            <Image
-              alt="previousQuestion"
-              height={1}
-              width={38}
-              src={"/icons/All Icon/Lesson page/Previous mistake question.svg"}
-            />&nbsp; Previous mistake questions
-          </div>
-        )}
+  <div className="max-w-4xl mx-auto px-6 py-6">
+    {/* Repeat Question Banner */}
+    {isRepeatedQuestion && (
+      <div className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-6">
+        <Image
+          alt="previousQuestion"
+          height={20}
+          width={20}
+          src="/icons/All Icon/Lesson page/Previous mistake question.svg"
+        />
+        <span>Previous mistake questions</span>
       </div>
-      <div className="flex justify-center items-center mb-4">
-        <div className="text-xl font-bold text-gray-700 mb-4">
-          <div dangerouslySetInnerHTML={{ __html: updatedTitle }} />
-        </div>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
-        <div>
-          {questionContentOptions.map((option) => (
-            <div className="relative" key={option.id}>
-              <div
-                className={`p-4 mb-2 rounded-lg font-bold border-4 border-lavender-300 flex items-center ${
-                  matchedOptions.includes(option.id)
-                    ? "bg-lavender-100"
-                    : selectedContentOption === option.id
-                    ? "bg-lavender-600 text-white"
-                    : "bg-white"
-                }`}
-                onClick={() => handleContentOptionClick(option.id)}
-                style={{
-                  boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
-                  cursor:
-                    matchedOptions.includes(option.id) || allOptionsMatched
-                      ? "default"
-                      : "pointer",
-                }}
-              >
-                <div className="flex-1 text-center">{option?.title}</div>
-                {matchedOptions.includes(option.id) && (
-                  <FaCheckCircle className="text-green-500 ml-2" />
-                )}
-                {/* {selectedContentOption === option.id &&
-                  !matchedOptions.includes(option.id) && (
-                    <FaTimesCircle className="text-red-500 ml-2" />
-                  )} */}
-                {selectedContentOption === option.id &&
-                  !matchedOptions.includes(option.id) &&
-                  showCrossIcon && ( // Show cross icon only on mismatch
-                    <FaTimesCircle className="text-red-500 ml-2" />
-                  )}
-              </div>
-              {option?.pronunciation && (
-                <div className={styles.tooltipContainer}>
-                  <FaInfoCircle
-                    size={12}
-                    color="lavender"
-                    className="cursor-pointer"
-                  />
-                  <span className={styles.tooltipText}>
-                    {option?.pronunciation ? option?.pronunciation : ""}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div>
-          {languageTitles.map((languageOption, index) => (
-            <div className="relative" key={languageOption?.id}>
-              <div
-                className={`p-4 mb-2 rounded-lg text-center border-4 border-lavender-300 flex items-center ${
-                  matchedOptions.includes(languageOption?.id)
-                    ? "bg-lavender-100"
-                    : selectedLanguageOption === languageOption?.id
-                    ? "bg-lavender-600 text-white"
-                    : "bg-white"
-                }`}
-                onClick={() => handleLanguageOptionClick(languageOption?.id)}
-                style={{
-                  boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
-                  cursor:
-                    matchedOptions.includes(languageOption?.id) ||
-                    allOptionsMatched
-                      ? "default"
-                      : "pointer",
-                }}
-              >
-                <div className="flex-1 text-center">
-                  {languageOption ? languageOption.title : "Not found"}
-                </div>
-                {matchedOptions.includes(languageOption?.id) && (
-                  <FaCheckCircle className="text-green-500 ml-2" />
-                )}
-                {/* {selectedLanguageOption === languageOption?.id &&
-                  !matchedOptions.includes(languageOption?.id) && (
-                    <FaTimesCircle className="text-red-500 ml-2" />
-                  )} */}
-                {selectedLanguageOption === languageOption.id &&
-                  !matchedOptions.includes(languageOption.id) &&
-                  showCrossIcon && ( // Show cross icon only on mismatch
-                    <FaTimesCircle className="text-red-500 ml-2" />
-                  )}
-              </div>
-              {languageTitles?.pronunciation && (
-                <div className={styles.tooltipContainer}>
-                  <FaInfoCircle
-                    size={12}
-                    color="lavender"
-                    className="cursor-pointer"
-                  />
-                  <span className={styles.tooltipText}>
-                    {languageTitles?.pronunciation
-                      ? languageTitles?.pronunciation
-                      : ""}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-      {/*<div className="mt-4">
-        {allOptionsMatched && (
-          <p className="text-green-500">All matches are correct!</p>
-        )}
-        </div>*/}
+    )}
+
+    {/* Title */}
+    <div className="text-center mb-8">
+      <div
+        className="text-3xl font-bold leading-snug"
+        dangerouslySetInnerHTML={{ __html: updatedTitle }}
+      />
     </div>
-  );
+
+    {/* Two-column matching area */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* Left: Content Options */}
+      <div className="">
+        {questionContentOptions.map((option) => (
+          <div key={option.id} className="relative mb-3">
+            <div
+              className={`p-4 rounded-lg font-bold border-4 border-lavender-300 flex items-center justify-between transition-transform ${
+                matchedOptions.includes(option.id)
+                  ? "bg-lavender-100"
+                  : selectedContentOption === option.id
+                  ? "bg-lavender-600 text-white scale-[1.02]"
+                  : "bg-white hover:scale-[1.02]"
+              }`}
+              onClick={() => handleContentOptionClick(option.id)}
+              style={{
+                cursor:
+                  matchedOptions.includes(option.id) || allOptionsMatched
+                    ? "default"
+                    : "pointer",
+              }}
+            >
+              <div className="flex-1 text-center text-2xl font-medium">{option?.title}</div>
+              {matchedOptions.includes(option.id) && (
+                <FaCheckCircle className="text-green-500 ml-2" />
+              )}
+              {selectedContentOption === option.id &&
+                !matchedOptions.includes(option.id) &&
+                showCrossIcon && (
+                  <FaTimesCircle className="text-red-500 ml-2" />
+                )}
+            </div>
+            {option?.pronunciation && (
+              <div className={styles.tooltipContainer}>
+                <FaInfoCircle size={12} color="lavender" />
+                <span className={styles.tooltipText}>
+                  {option?.pronunciation}
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Right: Language Options */}
+      <div className="">
+        {languageTitles.map((languageOption) => (
+          <div key={languageOption?.id} className="relative mb-3">
+            <div
+              className={`p-4 rounded-lg border-4 border-lavender-300 flex items-center justify-between transition-transform ${
+                matchedOptions.includes(languageOption?.id)
+                  ? "bg-lavender-100"
+                  : selectedLanguageOption === languageOption?.id
+                  ? "bg-lavender-600 text-white scale-[1.02]"
+                  : "bg-white hover:scale-[1.02]"
+              }`}
+              onClick={() => handleLanguageOptionClick(languageOption?.id)}
+              style={{
+                cursor:
+                  matchedOptions.includes(languageOption?.id) ||
+                  allOptionsMatched
+                    ? "default"
+                    : "pointer",
+              }}
+            >
+              <div className="flex-1 text-center text-2xl font-bold">
+                {languageOption ? languageOption.title : "Not found"}
+              </div>
+              {matchedOptions.includes(languageOption?.id) && (
+                <FaCheckCircle className="text-green-500 ml-2" />
+              )}
+              {selectedLanguageOption === languageOption.id &&
+                !matchedOptions.includes(languageOption.id) &&
+                showCrossIcon && (
+                  <FaTimesCircle className="text-red-500 ml-2" />
+                )}
+            </div>
+            {languageOption?.pronunciation && (
+              <div className={styles.tooltipContainer}>
+                <FaInfoCircle size={12} color="lavender" />
+                <span className={styles.tooltipText}>
+                  {languageOption?.pronunciation}
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 };
 
 export default MatchingQuestion;

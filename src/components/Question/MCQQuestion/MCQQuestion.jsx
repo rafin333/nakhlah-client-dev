@@ -303,20 +303,10 @@ const MCQQuestion = ({
             height={80}
             onClick={() => handleAudioPlay(0.95)}
           />
-          {/* <FaPlay
-            className="text-lavender-600 text-4xl cursor-pointer mb-2"
-            onClick={() => handleAudioPlay(0.55)}
-          />
-
-          <FaPlay
-            className="text-lavender-600 text-5xl cursor-pointer mb-2"
-            onClick={() => handleAudioPlay(0.95)}
-          /> */}
-          {/* <span className="text-center text-l">{questionDetails?.title}</span> */}
         </div>
       )}
       <div className="flex justify-center items-center mb-4">
-        <div className=" text-lg font-semibold text-gray-700 mb-4">
+        <div className="text-2xl font-semibold text-gray-700 mb-4">
           {/* {questionDetails?.mediaTypes?.text && questionDetails?.title} */}
           {questionDetails?.mediaTypes?.text && (
             <div dangerouslySetInnerHTML={{ __html: updatedTitle }} />
@@ -329,7 +319,7 @@ const MCQQuestion = ({
           <div className="w-full md:w-1/2 flex justify-center items-center mb-5 md:mb-0">
             <div
               className="relative max-w-xs border-0 border-lavender-100"
-              style={{ height: "200px", width: "90%" }}
+              style={{ height: "280px", width: "90%" }}
             >
               {questionDetails?.image && questionDetails?.mediaTypes?.image && (
                 <Image
@@ -339,40 +329,23 @@ const MCQQuestion = ({
                   objectFit="contain"
                 />
               )}
-              {/* {questionDetails?.mediaTypes?.audio && (
-                <button
-                  className="absolute top-1 right-0 mt-1 mr-1 cursor-pointer text-white bg-lavender-600 p-2 rounded-full border-2 border-lavender-400"
-                  onClick={handleAudioPlay}
-                >
-                  <audio ref={audioRef} src={audioURL} />
-
-                  <FaVolumeUp
-                    size={
-                      questionDetails?.mediaTypes?.image &&
-                      questionDetails?.image
-                        ? 18
-                        : 50
-                    }
-                  />
-                </button>
-              )} */}
             </div>
           </div>
         )}
         <div className="w-full md:w-1/2">
           {!questionDetails?.contentMediaTypes?.image && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
               {shuffleContentOptionData.map((option, i) => (
                 <div
                   className={`relative cursor-pointer flex items-center justify-center px-2 py-2 rounded-lg border-4 border-lavender-300 ${
                     selectedOption === option.id
-                      ? "bg-lavender-100 border-lavender-600"
-                      : ""
+                      ? "bg-lavender-600 text-white scale-[1.05]"
+                      : "bg-lavender hover:scale-[1.02]"
                   }`}
                   key={option.id}
                   onClick={() => handleClick(option.id, i)}
                 >
-                  <button className={`font-bold`}>{option?.title}</button>
+                  <button className={`text-2xl font-bold`}>{option?.title}</button>
                   {/* Info Icon with Tooltip in Top-Right Corner */}
                   {option?.pronunciation && (
                     <div className={styles.tooltipContainer}>
