@@ -28,7 +28,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchFAQs = async () => {
       try {
-        const response = await fetch("https://devapi.nakhlah.xyz/api/faqs");
+        const response = await fetch("https://devapi.siamrtx.space/api/faqs");
         const data = await response.json();
         if (response.ok) {
           setFaqs(data?.data || []);
@@ -82,7 +82,7 @@ const ProfilePage = () => {
     profileData.append("data", JSON.stringify(formData));
   
     try {
-      const response = await fetch("https://devapi.nakhlah.xyz/api/registereds", {
+      const response = await fetch("https://devapi.siamrtx.space/api/registereds", {
         method: "PATCH",
         body: profileData,
         headers: {
@@ -131,7 +131,7 @@ const ProfilePage = () => {
     }
 
     try {
-      const response = await fetch("https://devapi.nakhlah.xyz/api/auth/change-password", {
+      const response = await fetch("https://devapi.siamrtx.space/api/auth/change-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -189,7 +189,7 @@ const ProfilePage = () => {
       try {
         const { token } = context;
 
-        const subscriptionResponse = await fetch('https://devapi.nakhlah.xyz/api/subscriptions?populate=*', {
+        const subscriptionResponse = await fetch('https://devapi.siamrtx.space/api/subscriptions?populate=*', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -205,7 +205,7 @@ const ProfilePage = () => {
         const fetchedPlanName = subscriptionData?.data?.subscription_plan?.planName || 'No Plan';
         setPlanName(fetchedPlanName);
 
-        const profileResponse = await fetch('https://devapi.nakhlah.xyz/api/registereds?populate=*', {
+        const profileResponse = await fetch('https://devapi.siamrtx.space/api/registereds?populate=*', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -219,7 +219,7 @@ const ProfilePage = () => {
 
         const profileData = await profileResponse.json();
         const pictureUrl = profileData?.data?.profilePicture?.url
-          ? `https://devapi.nakhlah.xyz${profileData.data.profilePicture.url}`
+          ? `https://devapi.siamrtx.space${profileData.data.profilePicture.url}`
           : '/default-profile.png';
 
         setProfilePicture(pictureUrl);
@@ -281,7 +281,7 @@ const ProfilePage = () => {
     }
 
     try {
-      const response = await fetch("https://devapi.nakhlah.xyz/api/feedbacks?populate=*", {
+      const response = await fetch("https://devapi.siamrtx.space/api/feedbacks?populate=*", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

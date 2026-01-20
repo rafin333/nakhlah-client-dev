@@ -20,6 +20,7 @@ import Learn from "./learn";
 import { getFromLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import { UndoIcon } from "lucide-react";
+import Support from "./support";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -46,42 +47,49 @@ const App = ({ Component, pageProps }) => {
     const tokenString = getUserInfo();
     setToken(tokenString);
   }, []);
+  
+  // Define provider values here so they can be used in both return blocks
   const providerValues = { token };
 
   if (typeof window !== undefined) {
     if (!token) {
-  console.log(accessToken, token);
-  return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <GoogleOAuthProvider clientId="YOUR_CLIENT_ID">
-          <Provider store={store}>
-            {route === "/privacyterms" && <PrivacyTerms />}
-            {route === "/query" && <Query />}
-            {route === "/" && <Landing />}
-            
-            {/* Add this line for reset password */}
-            {route === "/reset-password" && <Component {...pageProps} />}
+      console.log(accessToken, token);
+      return (
+        <>
+          {loading ? (
+            <Loader />
+          ) : (
+            <GoogleOAuthProvider clientId="YOUR_CLIENT_ID">
+              <Provider store={store}>
+                {/* ADDED ThemeContext.Provider HERE */}
+                <ThemeContext.Provider value={providerValues}>
+                    {route === "/privacyterms" && <PrivacyTerms />}
+                    {route === "/support" && <Support />}
+                    {route === "/query" && <Query />}
+                    {route === "/" && <Landing />}
+                    
+                    {/* Public Store Route */}
+                    {route === "/public-store" && <Component {...pageProps} />}
+                    
+                    {route === "/reset-password" && <Component {...pageProps} />}
 
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              draggable={false}
-              closeOnClick
-              pauseOnHover
-              transition={Slide}
-            />
-          </Provider>
-        </GoogleOAuthProvider>
-      )}
-    </>
-  );
-}
-
+                    <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    draggable={false}
+                    closeOnClick
+                    pauseOnHover
+                    transition={Slide}
+                    />
+                </ThemeContext.Provider>
+              </Provider>
+            </GoogleOAuthProvider>
+          )}
+        </>
+      );
+    }
   }
 
   return (
@@ -112,3 +120,127 @@ const App = ({ Component, pageProps }) => {
   );
 };
 export default appWithTranslation(App);
+
+
+
+
+
+
+
+
+
+// import "@/styles/globals.css";
+// import Script from "next/script";
+// import { useEffect, useState } from "react";
+// import { Slide, ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import ThemeContext from "@/components/context/themeContext";
+// import Loader from "@/components/Loader";
+// import Login from "@/components/Login/login";
+// import Layout from "@/components/Layout";
+// import { Provider } from "react-redux";
+// import { store } from "@/redux/store";
+// import { getUserInfo } from "@/services/auth.service";
+// import { appWithTranslation } from "next-i18next";
+// import { useRouter } from "next/router";
+// import RegisterForm from "@/components/Register/Register";
+// import Query from "./query";
+// import Landing from "@/components/Landing/landing";
+// import PrivacyTerms from "./privacyterms";
+// import Learn from "./learn";
+// import { getFromLocalStorage } from "@/utils/local-storage";
+// import { authKey } from "@/constants/storageKey";
+// import { UndoIcon } from "lucide-react";
+// import Support from "./support";
+
+// import { GoogleOAuthProvider } from "@react-oauth/google";
+
+// const App = ({ Component, pageProps }) => {
+//   // const { route } = useRouter();
+//   const router = useRouter();
+//   const route = router.pathname;
+//   const [token, setToken] = useState();
+//   const [loading, setLoading] = useState(true);
+//   console.log(router.pathname);
+//   useEffect(() => {
+//     setTimeout(() => setLoading(false), 1000);
+//   }, []);
+//   // const [isResponsiveVoiceLoaded, setIsResponsiveVoiceLoaded] = useState(false);
+//   // useEffect(() => {
+//   //   window.localStorage.setItem("RV", isResponsiveVoiceLoaded);
+//   // }, [isResponsiveVoiceLoaded]);
+
+//   const accessToken = getFromLocalStorage(authKey);
+
+//   // console.log(Object.keys(accessToken));
+
+//   useEffect(() => {
+//     const tokenString = getUserInfo();
+//     setToken(tokenString);
+//   }, []);
+//   const providerValues = { token };
+
+//   if (typeof window !== undefined) {
+//     if (!token) {
+//   console.log(accessToken, token);
+//   return (
+//     <>
+//       {loading ? (
+//         <Loader />
+//       ) : (
+//         <GoogleOAuthProvider clientId="YOUR_CLIENT_ID">
+//           <Provider store={store}>
+//             {route === "/privacyterms" && <PrivacyTerms />}
+//             {route === "/support" && <Support />}
+//             {route === "/query" && <Query />}
+//             {route === "/" && <Landing />}
+            
+//             {route === "/reset-password" && <Component {...pageProps} />}
+
+//             <ToastContainer
+//               position="top-right"
+//               autoClose={3000}
+//               hideProgressBar={false}
+//               newestOnTop={false}
+//               draggable={false}
+//               closeOnClick
+//               pauseOnHover
+//               transition={Slide}
+//             />
+//           </Provider>
+//         </GoogleOAuthProvider>
+//       )}
+//     </>
+//   );
+// }
+
+//   }
+
+//   return (
+//     <Provider store={store}>
+//       <ThemeContext.Provider value={providerValues}>
+//         {/* <Script
+//           src="https://code.responsivevoice.org/responsivevoice.js?key=MsWPQFPp"
+//           strategy="afterInteractive"
+//           onLoad={() => setIsResponsiveVoiceLoaded(true)}
+//         /> */}
+//         <Layout>
+//           <div style={{ flex: 1 }}>
+//             <Component {...pageProps} />
+//             <ToastContainer
+//               position="top-right"
+//               autoClose={3000}
+//               hideProgressBar={false}
+//               newestOnTop={false}
+//               draggable={false}
+//               closeOnClick
+//               pauseOnHover
+//               transition={Slide}
+//             />
+//           </div>
+//         </Layout>
+//       </ThemeContext.Provider>
+//     </Provider>
+//   );
+// };
+// export default appWithTranslation(App);

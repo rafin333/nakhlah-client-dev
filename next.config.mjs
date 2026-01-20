@@ -9,11 +9,15 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.nakhlah.xyz',
+        hostname: 'api.siamrtx.space',
       },
       {
         protocol: 'https',
-        hostname: 'devapi.nakhlah.xyz',
+        hostname: 'devapi.siamrtx.space',
+      },
+      {
+        protocol: 'https',
+        hostname: 'testapi.siamrtx.space',
       },
       {
         protocol: 'https',
