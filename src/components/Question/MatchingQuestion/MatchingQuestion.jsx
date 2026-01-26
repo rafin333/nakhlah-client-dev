@@ -40,6 +40,7 @@ const MatchingQuestion = ({
           gamificationTxData,
           TRANSACTION_NAMES.PALM_LOSS_BY_WRONG_ANSWER
         );
+        setIsAlreadyDateDeducted(true);
       } catch (error) {
         console.error("Error handling learner gamification:", error);
       }
@@ -336,119 +337,117 @@ const MatchingQuestion = ({
   // );
 
   return (
-  <div className="max-w-4xl mx-auto px-6 py-6">
-    {/* Repeat Question Banner */}
-    {isRepeatedQuestion && (
-      <div className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-6">
-        <Image
-          alt="previousQuestion"
-          height={20}
-          width={20}
-          src="/icons/All Icon/Lesson page/Previous mistake question.svg"
+    <div className="max-w-4xl mx-auto px-6 py-6">
+      {/* Repeat Question Banner */}
+      {isRepeatedQuestion && (
+        <div className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-6">
+          <Image
+            alt="previousQuestion"
+            height={20}
+            width={20}
+            src="/icons/All Icon/Lesson page/Previous mistake question.svg"
+          />
+          <span>Previous mistake questions</span>
+        </div>
+      )}
+
+      {/* Title */}
+      <div className="text-center mb-8">
+        <div
+          className="text-3xl font-bold leading-snug"
+          dangerouslySetInnerHTML={{ __html: updatedTitle }}
         />
-        <span>Previous mistake questions</span>
-      </div>
-    )}
-
-    {/* Title */}
-    <div className="text-center mb-8">
-      <div
-        className="text-3xl font-bold leading-snug"
-        dangerouslySetInnerHTML={{ __html: updatedTitle }}
-      />
-    </div>
-
-    {/* Two-column matching area */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-      {/* Left: Content Options */}
-      <div className="">
-        {questionContentOptions.map((option) => (
-          <div key={option.id} className="relative mb-3">
-            <div
-              className={`p-4 rounded-lg font-bold border-4 border-lavender-300 flex items-center justify-between transition-transform ${
-                matchedOptions.includes(option.id)
-                  ? "bg-lavender-100"
-                  : selectedContentOption === option.id
-                  ? "bg-lavender-600 text-white scale-[1.02]"
-                  : "bg-white hover:scale-[1.02]"
-              }`}
-              onClick={() => handleContentOptionClick(option.id)}
-              style={{
-                cursor:
-                  matchedOptions.includes(option.id) || allOptionsMatched
-                    ? "default"
-                    : "pointer",
-              }}
-            >
-              <div className="flex-1 text-center text-2xl font-medium">{option?.title}</div>
-              {matchedOptions.includes(option.id) && (
-                <FaCheckCircle className="text-green-500 ml-2" />
-              )}
-              {selectedContentOption === option.id &&
-                !matchedOptions.includes(option.id) &&
-                showCrossIcon && (
-                  <FaTimesCircle className="text-red-500 ml-2" />
-                )}
-            </div>
-            {option?.pronunciation && (
-              <div className={styles.tooltipContainer}>
-                <FaInfoCircle size={12} color="lavender" />
-                <span className={styles.tooltipText}>
-                  {option?.pronunciation}
-                </span>
-              </div>
-            )}
-          </div>
-        ))}
       </div>
 
-      {/* Right: Language Options */}
-      <div className="">
-        {languageTitles.map((languageOption) => (
-          <div key={languageOption?.id} className="relative mb-3">
-            <div
-              className={`p-4 rounded-lg border-4 border-lavender-300 flex items-center justify-between transition-transform ${
-                matchedOptions.includes(languageOption?.id)
-                  ? "bg-lavender-100"
-                  : selectedLanguageOption === languageOption?.id
-                  ? "bg-lavender-600 text-white scale-[1.02]"
-                  : "bg-white hover:scale-[1.02]"
-              }`}
-              onClick={() => handleLanguageOptionClick(languageOption?.id)}
-              style={{
-                cursor:
-                  matchedOptions.includes(languageOption?.id) ||
-                  allOptionsMatched
-                    ? "default"
-                    : "pointer",
-              }}
-            >
-              <div className="flex-1 text-center text-2xl font-bold">
-                {languageOption ? languageOption.title : "Not found"}
-              </div>
-              {matchedOptions.includes(languageOption?.id) && (
-                <FaCheckCircle className="text-green-500 ml-2" />
-              )}
-              {selectedLanguageOption === languageOption.id &&
-                !matchedOptions.includes(languageOption.id) &&
-                showCrossIcon && (
-                  <FaTimesCircle className="text-red-500 ml-2" />
+      {/* Two-column matching area */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {/* Left: Content Options */}
+        <div className="">
+          {questionContentOptions.map((option) => (
+            <div key={option.id} className="relative mb-3">
+              <div
+                className={`p-4 rounded-lg font-bold border-4 border-lavender-300 flex items-center justify-between transition-transform ${matchedOptions.includes(option.id)
+                    ? "bg-lavender-100"
+                    : selectedContentOption === option.id
+                      ? "bg-lavender-600 text-white scale-[1.02]"
+                      : "bg-white hover:scale-[1.02]"
+                  }`}
+                onClick={() => handleContentOptionClick(option.id)}
+                style={{
+                  cursor:
+                    matchedOptions.includes(option.id) || allOptionsMatched
+                      ? "default"
+                      : "pointer",
+                }}
+              >
+                <div className="flex-1 text-center text-2xl font-medium">{option?.title}</div>
+                {matchedOptions.includes(option.id) && (
+                  <FaCheckCircle className="text-green-500 ml-2" />
                 )}
-            </div>
-            {languageOption?.pronunciation && (
-              <div className={styles.tooltipContainer}>
-                <FaInfoCircle size={12} color="lavender" />
-                <span className={styles.tooltipText}>
-                  {languageOption?.pronunciation}
-                </span>
+                {selectedContentOption === option.id &&
+                  !matchedOptions.includes(option.id) &&
+                  showCrossIcon && (
+                    <FaTimesCircle className="text-red-500 ml-2" />
+                  )}
               </div>
-            )}
-          </div>
-        ))}
+              {option?.pronunciation && (
+                <div className={styles.tooltipContainer}>
+                  <FaInfoCircle size={12} color="lavender" />
+                  <span className={styles.tooltipText}>
+                    {option?.pronunciation}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Right: Language Options */}
+        <div className="">
+          {languageTitles.map((languageOption) => (
+            <div key={languageOption?.id} className="relative mb-3">
+              <div
+                className={`p-4 rounded-lg border-4 border-lavender-300 flex items-center justify-between transition-transform ${matchedOptions.includes(languageOption?.id)
+                    ? "bg-lavender-100"
+                    : selectedLanguageOption === languageOption?.id
+                      ? "bg-lavender-600 text-white scale-[1.02]"
+                      : "bg-white hover:scale-[1.02]"
+                  }`}
+                onClick={() => handleLanguageOptionClick(languageOption?.id)}
+                style={{
+                  cursor:
+                    matchedOptions.includes(languageOption?.id) ||
+                      allOptionsMatched
+                      ? "default"
+                      : "pointer",
+                }}
+              >
+                <div className="flex-1 text-center text-2xl font-bold">
+                  {languageOption ? languageOption.title : "Not found"}
+                </div>
+                {matchedOptions.includes(languageOption?.id) && (
+                  <FaCheckCircle className="text-green-500 ml-2" />
+                )}
+                {selectedLanguageOption === languageOption.id &&
+                  !matchedOptions.includes(languageOption.id) &&
+                  showCrossIcon && (
+                    <FaTimesCircle className="text-red-500 ml-2" />
+                  )}
+              </div>
+              {languageOption?.pronunciation && (
+                <div className={styles.tooltipContainer}>
+                  <FaInfoCircle size={12} color="lavender" />
+                  <span className={styles.tooltipText}>
+                    {languageOption?.pronunciation}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 };
 

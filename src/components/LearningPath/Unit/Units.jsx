@@ -21,6 +21,7 @@ const Units = ({ units, CurrentProgress }) => {
   }, [unitSort]);
 
   // // Update scroll position on component mount and whenever the units change
+  // // Update scroll position on component mount and whenever the units change
   useEffect(() => {
     if (containerRef.current) {
       const element = containerRef.current;
@@ -37,7 +38,9 @@ const Units = ({ units, CurrentProgress }) => {
             className="flex flex-col justify-between unitBackground"
             style={{
               backgroundImage: `url(${unit.backgroundImageUrl})`,
-              top: `${index}00vh`,
+              // top: `${index}00vh`, // Removed to prevent gap, since we are using position: relative
+              position: "relative", // Ensure relative positioning for absolute children
+              zIndex: 0, // Override CSS z-index: -1 which might hide content when positioned
             }}
           >
             {/* <div className="flex justify-between items-center text-white rounded-lg p-2 mb-4 border">
@@ -66,7 +69,7 @@ const Units = ({ units, CurrentProgress }) => {
               >
                 <FloatingBanner
                   text={unit.unitTitle}
-                  icon={"/image/X.svg"}
+                  icon={"/image/X2.svg"}
                   index={index}
                 />
               </div>

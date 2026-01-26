@@ -45,13 +45,13 @@ const Layout = ({ children }) => {
   });
 
   useEffect(() => {
-    if ( !learnerInfoData || learnerInfoData?.length === 0 || learnerInfoData === undefined) {
+    if (!isLoading && (!learnerInfoData || learnerInfoData?.length === 0 || learnerInfoData === undefined)) {
       console.log(router.pathname);
-      if(router.pathname === '/learn'){router.push("/query")}
+      if (router.pathname === '/learn') { router.push("/query") }
       console.log(learnerInfoData);
     }
-  }, [learnerInfoData])
-  
+  }, [learnerInfoData, isLoading])
+
   const { data: LGameInfo, isLoading: GameLoading } =
     useGetLearnerGamificationStockQuery({ ...LGSquery }); /// Check Palm, Dates, Injaz
   const { data: subscriptionData } = useGetSubscriptionsQuery({ ...LGSquery }); /// Get Subscription Data

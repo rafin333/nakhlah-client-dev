@@ -12,7 +12,7 @@ body,
   margin: 0;
   font-family: 'Inter', sans-serif;
   background: rgb(248 241 219 / var(--tw-bg-opacity, 1));
-  
+
 }
 
 .container {
@@ -21,7 +21,7 @@ body,
   min-height: 100vh;
 }
 
-.container::-webkit-scrollbar{
+.container::-webkit-scrollbar {
   display: none;
 }
 
@@ -66,7 +66,7 @@ body,
   backdrop-filter: blur(10px);
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 119.5vh; 
+  min-height: 119.5vh;
   min-width: 217.5vh;
   width: 100%;
   z-index: -1;
@@ -146,7 +146,7 @@ body,
   margin: 0.5rem;
   border-radius: 5px;
   margin-left: 25%;
-  
+
 }
 
 .user-card {
@@ -298,7 +298,7 @@ body,
   font-size: 1.2rem;
   display: flex;
   align-items: center;
-  gap: 8px; 
+  gap: 8px;
 }
 
 .buttonInactive {
@@ -317,11 +317,11 @@ body,
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: not-allowed; 
+  cursor: not-allowed;
 }
 
 .buttonInactive:hover {
-  background-color: #b50000; 
+  background-color: #b50000;
 }
 
 /* //////////////////// POP BUTTON END ////////////////////////// */
@@ -341,15 +341,18 @@ body,
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #f5c116; /* Set the thumb color */
+  background-color: #f5c116;
+  /* Set the thumb color */
   border-radius: 10px;
   background-size: cover;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #ffffff00; /* Set the track color */
+  background-color: #ffffff00;
+  /* Set the track color */
   border-radius: 10px;
-  background-image: url('/image/sidebar.png'); /* Add your background image */
+  background-image: url('/image/sidebar.png');
+  /* Add your background image */
 
 }
 
@@ -375,16 +378,16 @@ body,
   /* overflow: hidden; */
   position: fixed;
   width: 17%;
-  
+
 }
 
-.sideList{
+.sideList {
   transform: scale(.9);
   position: relative;
   top: -50px;
 }
 
-@media(min-width: 2000px){
+@media(min-width: 2000px) {
   .sideBarBG {
     width: 19%;
     padding-bottom: 100px;
@@ -396,19 +399,21 @@ body,
 }
 
 .sideBarBG::-webkit-scrollbar {
-   /*width: 10px; Adjust the scrollbar width as needed */
+  /*width: 10px; Adjust the scrollbar width as needed */
   display: none;
 }
 
 .sideBarBG::-webkit-scrollbar-thumb {
-  background-color: #510f8b00; /* Set the thumb color */
+  background-color: #510f8b00;
+  /* Set the thumb color */
   border-radius: 1px;
   /* background-image: url('your-image.png'); Add your background image */
   background-size: cover;
 }
 
 .sideBarBG::-webkit-scrollbar-track {
-  background-color: #f5c11600  !important; /* Set the track color */
+  background-color: #f5c11600 !important;
+  /* Set the track color */
   border-radius: 0px !important;
 }
 
@@ -458,9 +463,12 @@ body,
   body * {
     visibility: hidden;
   }
-  #printable, #printable * {
+
+  #printable,
+  #printable * {
     visibility: visible;
   }
+
   #printable {
     position: absolute;
     left: 0;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
+import { useDispatch } from "react-redux";
 import themeContext from "./context/themeContext";
 import { useRouter } from "next/router";
 import { isAuthenticateUser, removeUserInfo } from "@/services/auth.service";
@@ -15,9 +16,14 @@ const Navbar = () => {
   useEffect(() => {
     setIsAuthenticated(isAuthenticateUser());
   }, [isAuthenticated]);
+  const dispatch = useDispatch(); // You need to import this if not present, but wait, I need to check imports.
   const handleLogout = () => {
     removeUserInfo();
-    setIsAuthenticated(false);
+    // setIsAuthenticated(false); // This usually updates via useEffect but explicit set matches current style
+    // However, dispatching Redux logout is key for consistency
+    import("@/redux/state/userSlice").then(({ logout }) => {
+      dispatch(logout());
+    });
     router.push("/"); // Redirect to login page after logout
   };
   return (

@@ -19,10 +19,13 @@ import Modal from "../Modals/Modal";
 import PalmStockModal from "../PalmStockModal/PalmStockModal";
 import { useGetLearnerGamificationStockQuery } from "@/redux/features/gamification/gamificationAPI";
 import { useDispatch } from "react-redux";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 import { dates, injaz, palm } from "@/redux/state/gemificationSlice";
+import { getBaseURL } from "@/helpers/config/envConfig";
 
 const Lesson = ({ lesson }) => {
+  const { playClick, playCorrect, playWrong } = useSoundEffects();
   const LGSquery = {
     populate: "*",
   };
@@ -37,7 +40,7 @@ const Lesson = ({ lesson }) => {
   const [options, setOptions] = useState({});
   const [languageDetails, setLanguageDetails] = useState({});
   const [contentDetails, setContentDetails] = useState({});
-  const [isCorrectAns, setIsCorrectAns] = useState(false);
+  const [isCorrectAns, setIsCorrectAns] = useState(null);
   const [isClickedCheck, setIsClickedCheck] = useState(false);
   const [correctAns, setCorrectAns] = useState(null);
   const [noOfCorrectAns, setNoOfCorrectAns] = useState(0);
@@ -47,6 +50,12 @@ const Lesson = ({ lesson }) => {
   const [isRepeatedQuestion, setIsRepeatedQuestion] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+
+
+  // Determine current question type safely
+  const currentQuestion = questions?.[step - 1];
+  const currentQuestionType = currentQuestion?.attributes?.question_content?.data?.attributes?.question_type?.data?.attributes?.title;
+
   console.log(isSelected);
   console.log(isCorrectAns);
 
@@ -56,6 +65,7 @@ const Lesson = ({ lesson }) => {
   const isExamLesson = lesson.startsWith("exam-");
   const examLevelId = isExamLesson ? lesson.split("-")[1] : null;
 
+  // ... (keeping existing query definitions omitted for brevity if needed, but here replacing block so keeping them)
   const journeyMapQuestionContentsQuery = {
     "populate[learning_journey_lesson][populate][learning_journey_level][populate][learning_journey_unit][populate][0]":
       "learning_journey",
@@ -123,6 +133,59 @@ const Lesson = ({ lesson }) => {
     dispatch(dates(num_dates));
     dispatch(injaz(num_injaz));
   }, [LGameInfo, isClickedCheck]);
+
+  useEffect(() => {
+    if (isClickedCheck && currentQuestionType !== QUESTION_TYPES.LEARN) {
+      if (isCorrectAns === true) {
+        playCorrect();
+      } else if (isCorrectAns === false) {
+        playWrong();
+      }
+    }
+  }, [isClickedCheck, isCorrectAns, playCorrect, playWrong, currentQuestionType]);
+
+  useEffect(() => {
+    const preloadImage = (url) => {
+      if (!url) return;
+
+      const fullUrl = url.startsWith("http")
+        ? url
+        : `${getBaseURL()}${url}`;
+
+      const img = new Image();
+      img.src = fullUrl;
+    };
+
+    if (!loading && questions?.length > 0) {
+      // Preload question images (Learn type)
+      questions.forEach((q) => {
+        const questionImage =
+          q?.attributes?.question_content?.data?.attributes?.questions?.data[0]
+            ?.attributes?.image?.data?.attributes?.url;
+        if (questionImage) {
+          preloadImage(questionImage);
+        }
+      });
+
+      // Preload option images (MCQ, etc.)
+      if (contentDetails) {
+        Object.values(contentDetails).forEach((detailsArray) => {
+          if (Array.isArray(detailsArray)) {
+            detailsArray.forEach((detail) => {
+              const thumbnailUrl =
+                detail?.attributes?.image?.data?.attributes?.formats?.thumbnail
+                  ?.url;
+              const fullImageUrl =
+                detail?.attributes?.image?.data?.attributes?.url;
+
+              if (thumbnailUrl) preloadImage(thumbnailUrl);
+              if (fullImageUrl) preloadImage(fullImageUrl);
+            });
+          }
+        });
+      }
+    }
+  }, [loading, questions, contentDetails]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -197,18 +260,18 @@ const Lesson = ({ lesson }) => {
                 const filteredLanguageDetailsDataForQuestionContent =
                   contentDetailsByLanguagesData
                     ? contentDetailsByLanguagesData.filter(
-                        (languageDetail) =>
-                          languageDetail?.attributes?.content?.data?.id ===
-                          questionContentIdDetails
-                      )
+                      (languageDetail) =>
+                        languageDetail?.attributes?.content?.data?.id ===
+                        questionContentIdDetails
+                    )
                     : [];
                 const filteredContentDetailsDataForQuestionContent =
                   contentDetailsData
                     ? contentDetailsData.filter(
-                        (contentDetail) =>
-                          contentDetail?.attributes?.content?.data?.id ===
-                          questionContentIdDetails
-                      )
+                      (contentDetail) =>
+                        contentDetail?.attributes?.content?.data?.id ===
+                        questionContentIdDetails
+                    )
                     : [];
                 contentLanguageDataArr.push(
                   ...filteredLanguageDetailsDataForQuestionContent
@@ -286,9 +349,11 @@ const Lesson = ({ lesson }) => {
   };
 
   const handleContinue = () => {
+    playClick();
     setIsSelected(false); // Reset selected option for the next question
     setIsClickedCheck(false);
     setCorrectAns(null);
+    setIsCorrectAns(null);
     if (step < questions.length) {
       setStep(step + 1);
     } else {
@@ -349,16 +414,16 @@ const Lesson = ({ lesson }) => {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-4">
-          <ProgressBar
-            step={step}
-            correctAns={noOfCorrectAns}
-            totalSteps={questions?.length}
-            totalInitialSteps={initialTotalQuestions}
-            handleCrossClick={handleCrossClick}
-            timeCount={handleTimeCount}
-            setShowModal={setShowModal}
-            isClickedCheck={isClickedCheck}
-          />
+      <ProgressBar
+        step={step}
+        correctAns={noOfCorrectAns}
+        totalSteps={questions?.length}
+        totalInitialSteps={initialTotalQuestions}
+        handleCrossClick={handleCrossClick}
+        timeCount={handleTimeCount}
+        setShowModal={setShowModal}
+        isClickedCheck={isClickedCheck}
+      />
       {questions?.length > 0 ? (
         <>
           {step === "complete" ? (
@@ -406,6 +471,7 @@ const Lesson = ({ lesson }) => {
                   handleCheck={handleCheck}
                   handleContinue={handleContinue}
                   question={questions ? questions[step - 1] : null}
+                  playClick={playClick}
                 />
               </form>
 
@@ -418,16 +484,16 @@ const Lesson = ({ lesson }) => {
           )}
         </>
       ) : (
-        isLoading?
-        <>
-        Loading...
-        </>
-        :
-        <>
-          {
-            "Sorry! No question available for this lesson. Please comeback later."
-          }
-        </>
+        isLoading ?
+          <>
+            Loading...
+          </>
+          :
+          <>
+            {
+              "Sorry! No question available for this lesson. Please comeback later."
+            }
+          </>
       )}
     </div>
   );

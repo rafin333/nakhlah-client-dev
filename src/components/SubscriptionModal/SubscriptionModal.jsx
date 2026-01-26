@@ -14,7 +14,7 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
   const [unsubscribeInitiate] = useAddUnsubscribeInitiateMutation();
   const { planData } = useSelector((state) => state.subscriptionStore);
 
-  const currentPlanName = planData?.subscription_plan?.planName; 
+  const currentPlanName = planData?.subscription_plan?.planName;
 
   const handleSelectPlan = (plan) => {
     if (plan?.attributes?.planName === currentPlanName) return;
@@ -43,17 +43,17 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
       return () => clearInterval(timer);
     }
   }, [redirecting]);
-  
+
   const handlePayment = async () => {
     if (!selectedPlan) {
       setError("Please select a plan before proceeding.");
       return;
     }
-  
+
     setLoading(true);
     setError(null);
     setSuccess(false);
-  
+
     try {
       if (selectedPlan?.attributes?.planName === "Free") {
         const response = await unsubscribeInitiate().unwrap();
@@ -62,18 +62,18 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
         setRedirecting(true);
         return;
       }
-  
+
       const requestBody = {
         data: {
           purchase: "Buy_Subscription",
           subscription_plan: selectedPlan?.id,
         },
       };
-  
+
       const response = await paymentsInitiate(requestBody).unwrap();
       setSuccess(true);
       console.log("Payment successful:", response);
-  
+
       if (response.success && response.url) {
         setTimeout(() => {
           window.location.href = response.url;
@@ -91,64 +91,52 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">Choose Your Plan</h2>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Choose Your Plan</h2>
+          <p className="text-xs text-gray-500">Upgrade for full access</p>
+        </div>
         <button
           onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          className="p-1.5 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
         >
           ✕
         </button>
       </div>
-      
-      <div className="mb-4 p-4 rounded-lg text-gray-700 "
-      style={{background: "rgb(251, 214, 135)",borderLeft: "4px solid #FFD700"}}>
-        <strong>Tip:</strong> To switch to a different plan, first select the free plan and unsubscribe from your current plan.
+
+      {/* Tip */}
+      <div className="mb-4 p-2.5 px-4 rounded-md text-sm text-gray-800 bg-amber-100 border-l-4 border-amber-400">
+        <strong>Note:</strong> To switch plans, please select Free Plan first to unsubscribe.
       </div>
 
       <div className="mb-6 text-center">
-        <p className="text-lg text-gray-600 bg-indigo-50 px-4 py-2 rounded-full inline-block">
+        <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-m font-medium text-gray-700">
           {currentPlanName === "Free" ? (
-            <>Your current plan: <span className="font-semibold text-indigo-600">Free</span></>
+            <>Your current plan: <span className="ml-1 font-bold text-indigo-600">Free</span></>
           ) : (
-            <>Active Plan: <span className="font-semibold text-green-600">{currentPlanName}</span></>
+            <>Active Plan: <span className="ml-1 font-bold text-green-600">{currentPlanName}</span></>
           )}
-        </p>
+        </div>
       </div>
 
-
+      {/* Error / Success Messages */}
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center text-red-600">
-          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
-          </svg>
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-center text-sm text-red-600">
           {error}
         </div>
       )}
 
-      {/* {redirecting && (
-        <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center text-green-600">
-          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-          </svg>
-          Redirecting in<span> </span> <span className="font-bold"> {countdown}</span> seconds...
-        </div>
-      )} */}
-
       {success && (
-        <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center text-green-600">
-          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-           </svg>
-
+        <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-md flex items-center text-sm text-green-600">
           {selectedPlan?.attributes?.planName === "Free"
-            ? `Redirecting to store in ${countdown} seconds...`
+            ? `Redirecting to store in ${countdown}s...`
             : "Redirecting to payment..."}
-         </div>
+        </div>
       )}
-      
+
       {/* card inside modal */}
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {subscriptionPlans?.map((plan, index) => {
           const isCurrentPlan = plan?.attributes?.planName === currentPlanName;
           const isPaidPlan = plan?.attributes?.planName !== "Free";
@@ -160,17 +148,20 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
           return (
             <div
               key={index}
-              className={`relative p-6 rounded-xl transition-all transform border-2 border-transparent
-                          ${isDisabled ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer hover:scale-[1.02] hover:border-2 hover:border-[#462288] hover:shadow-lg hover:shadow-[#462288]'}
-                          ${isSelected ? 'bg-gradient-to-br from-lavender-800 to-purple-700 text-white shadow-lg border-[#462288] shadow-[#462288]' : 'bg-gray-50 hover:shadow-md'}`}
+              className={`relative p-4 rounded-xl border-2 transition-all cursor-pointer
+                ${isDisabled ? 'opacity-60 grayscale cursor-not-allowed border-gray-100' : 'hover:scale-[1.01]'}
+                ${isSelected
+                  ? 'bg-gradient-to-br from-lavender-800 to-purple-700 text-white border-purple-800 shadow-md'
+                  : 'bg-white border-gray-100 hover:border-purple-200 hover:shadow-sm'
+                }`}
               onClick={() => !isDisabled && handleSelectPlan(plan)}
             >
               {isCurrentPlan && (
-                <div className="absolute top-0 right-6 bg-white text-purple-900 px-3 py-1 rounded-full text-l font-bold shadow-sm">
+                <div className="absolute top-0 right-6 bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-l font-bold shadow-sm">
                   Current Plan
                 </div>
               )}
-              
+
               {isOtherPaid && (
                 <div className="absolute top-0 right-6 bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-l font-bold shadow-sm">
                   Not Available
@@ -185,11 +176,11 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                
+
                 <h3 className={`text-2xl font-bold ${isSelected ? 'text-white' : 'text-gray-800'}`}>
                   {plan?.attributes?.planName}
                 </h3>
-                
+
                 <div className="mt-2">
                   <span className={`text-4xl font-extrabold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
                     ${plan?.attributes?.price}
@@ -212,12 +203,12 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       <div>
-                        <span className={`font-medium ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                        {/* <span className={`font-medium ${isSelected ? 'text-white' : 'text-gray-900'}`}>
                           {feature?.attributes?.featureName}
-                        </span>
+                        </span> */}
                         <p className={`text-sm ${isSelected ? 'text-white/80' : 'text-gray-500'}`}>
                           {feature?.attributes?.featureDetails}
                         </p>
@@ -231,22 +222,22 @@ function SubscriptionModal({ subscriptionPlans, onClose }) {
         })}
       </div>
 
-      <div className="mt-8 space-y-4">
+      {/* Footer Actions */}
+      <div className="mt-6 flex flex-col sm:flex-row gap-3">
         {selectedPlan && !loading && (
           <button
-            className="w-full bg-gradient-to-r from-lavender-800 to-purple-700 hover:from-purple-700 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all"
+            className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition-all text-sm"
             onClick={handlePayment}
           >
             Continue with {selectedPlan.attributes.planName}
           </button>
         )}
-
         <button
-          className="w-full border-2 border-gray-200 hover:border-gray-300 py-3 px-6 mb-1 rounded-lg transition-colors bg-gray-500 hover:bg-gray-700 text-white font-bold"
+          className={`flex-1 border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm ${!selectedPlan ? 'w-full' : ''}`}
           onClick={onClose}
           disabled={loading}
         >
-          Close
+          Cancel
         </button>
       </div>
 

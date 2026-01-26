@@ -15,6 +15,7 @@ export const learningJourneyApi = baseApi.injectEndpoints({
         },
       }),
       providesTags: [TagTypes.LEARNING_JOURNEY_UNITS],
+      keepUnusedDataFor: 300,
     }),
 
     getLearningJourneyLevels: build.query({
@@ -29,6 +30,7 @@ export const learningJourneyApi = baseApi.injectEndpoints({
         },
       }),
       providesTags: [TagTypes.LEARNING_JOURNEY_LEVELS],
+      keepUnusedDataFor: 300,
     }),
 
     getLearningJourneyLessons: build.query({
@@ -43,6 +45,7 @@ export const learningJourneyApi = baseApi.injectEndpoints({
         },
       }),
       providesTags: [TagTypes.LEARNING_JOURNEY_LESSONS],
+      keepUnusedDataFor: 300,
     }),
 
     addLearnerJourney: build.mutation({

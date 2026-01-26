@@ -126,9 +126,7 @@ const LessonComplete = ({
       }
     }
 
-    router.push(`/learn?complete=${lesson}`).then(() => {
-      window.location.reload();
-    });
+    router.push(`/learn`);
   };
 
   return (

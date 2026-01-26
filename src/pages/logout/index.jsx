@@ -6,13 +6,13 @@ const LogoutPage = () => {
   const router = useRouter();
   const handleLogout = () => {
     removeUserInfo();
-    router.push("/").then(() => window.location.reload()); // Redirect to login page after logout
+    router.push("/");
   };
 
   useEffect(() => {
     handleLogout();
   }, [router]);
-  
+
   return <div></div>;
 };
 

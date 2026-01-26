@@ -1,3 +1,83 @@
+// /** @type {import('tailwindcss').Config} */
+// module.exports = {
+//   content: [
+//     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+//     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+//     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+//   ],
+//   theme: {
+//     extend: {
+//       backgroundImage: {
+//         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+//         "gradient-conic":
+//           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+//       },
+//       colors: {
+//         'custom-purple': '#49263E',
+//         lavender: {
+//           '50': '#f2e8f9',  // very light lavender
+//           '100': '#e5d1f3', // much lighter lavender
+//           '200': '#d7b9ed', // lighter lavender
+//           '300': '#c9a2e7', // light lavender
+//           '400': '#bc8be1', // light-medium lavender
+//           '500': '#ae74db', // medium lavender
+//           '600': '#652e7f', // lavender
+//           '700': '#582774', // slightly darker lavender
+//           '800': '#4b2069', // darker lavender
+//           '900': '#3e195e'  // much darker lavender
+//         },
+//         'golden-yellow': '#cb8f15',
+//         'light-gold': '#fbd687'
+//       },
+//       utilities: {
+//         '.hide-scrollbar': {
+//           '-ms-overflow-style': 'none',  /* IE and Edge */
+//           'scrollbar-width': 'none',  /* Firefox */
+//           '&::-webkit-scrollbar': {
+//             'display': 'none'  /* Chrome, Safari, Opera */
+//           }
+//         }
+//       },
+//       fontFamily: {
+//         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+//         // Add more font families if needed
+//       },
+//       screens: {
+//         'xs': '480px', // Custom 'xs' breakpoint
+//         '3xl': '1750px', // Custom '3xl' breakpoint
+//         '4xl': '2000px', // Custom '3xl' breakpoint
+//         '5xl': '2400px', // Custom '3xl' breakpoint
+//       },
+//       keyframes: {
+//         blink1: {
+//           '0%': { "padding": " 5px 15px", "font-size": " 16px", "border": " 2px solid #594088", "border-radius": " 5px", "background-color": " #624d88", "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
+//           '50%': { "padding": " 5px 15px", "font-size": " 16px", "border": " 2px solid #ffcf32", "border-radius": " 5px", "background-color": " #f4c11a", "color": " #575757", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
+//           '100%': { "padding": " 5px 15px", "font-size": " 16px", "border": " 2px solid #594088", "border-radius": " 5px", "background-color": " #624d88", "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"}
+//         },
+//         blink2: {
+//           '0%': { "padding": " 5px 15px", "font-size": " 16px",  "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
+//           '50%': { "padding": " 5px 15px", "font-size": " 16px",  "color": " #575757", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
+//           '100%': { "padding": " 5px 15px", "font-size": " 16px",  "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"}
+//         }
+//       },
+//       animation: {
+//         'blink-slow': 'blink1 2s infinite',
+//         'blink-text': 'blink2 2s infinite'
+//       }
+//     },
+//   },
+//   plugins: [require("@tailwindcss/typography")],
+// };
+
+
+
+
+
+
+
+
+
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,6 +85,7 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+
   theme: {
     extend: {
       backgroundImage: {
@@ -12,60 +93,83 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+
       colors: {
-        'custom-purple': '#49263E',
+        "custom-purple": "#49263E",
+        "golden-yellow": "#cb8f15",
+        "light-gold": "#fbd687",
+
         lavender: {
-          '50': '#f2e8f9',  // very light lavender
-          '100': '#e5d1f3', // much lighter lavender
-          '200': '#d7b9ed', // lighter lavender
-          '300': '#c9a2e7', // light lavender
-          '400': '#bc8be1', // light-medium lavender
-          '500': '#ae74db', // medium lavender
-          '600': '#652e7f', // lavender
-          '700': '#582774', // slightly darker lavender
-          '800': '#4b2069', // darker lavender
-          '900': '#3e195e'  // much darker lavender
+          50: "#f2e8f9",
+          100: "#e5d1f3",
+          200: "#d7b9ed",
+          300: "#c9a2e7",
+          400: "#bc8be1",
+          500: "#ae74db",
+          600: "#652e7f",
+          700: "#582774",
+          800: "#4b2069",
+          900: "#3e195e",
         },
-        'golden-yellow': '#cb8f15',
-        'light-gold': '#fbd687'
       },
-      utilities: {
-        '.hide-scrollbar': {
-          '-ms-overflow-style': 'none',  /* IE and Edge */
-          'scrollbar-width': 'none',  /* Firefox */
-          '&::-webkit-scrollbar': {
-            'display': 'none'  /* Chrome, Safari, Opera */
-          }
-        }
-      },
+
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-        // Add more font families if needed
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
       },
+
       screens: {
-        'xs': '480px', // Custom 'xs' breakpoint
-        '3xl': '1750px', // Custom '3xl' breakpoint
-        '4xl': '2000px', // Custom '3xl' breakpoint
-        '5xl': '2400px', // Custom '3xl' breakpoint
+        xs: "480px",
+        "3xl": "1750px",
+        "4xl": "2000px",
+        "5xl": "2400px",
       },
+
       keyframes: {
         blink1: {
-          '0%': { "padding": " 5px 15px", "font-size": " 16px", "border": " 2px solid #594088", "border-radius": " 5px", "background-color": " #624d88", "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
-          '50%': { "padding": " 5px 15px", "font-size": " 16px", "border": " 2px solid #ffcf32", "border-radius": " 5px", "background-color": " #f4c11a", "color": " #575757", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
-          '100%': { "padding": " 5px 15px", "font-size": " 16px", "border": " 2px solid #594088", "border-radius": " 5px", "background-color": " #624d88", "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"}
+          "0%, 100%": {
+            backgroundColor: "#624d88",
+            borderColor: "#594088",
+            color: "#f8f8f8",
+            boxShadow: "0 2px 4px rgba(134, 111, 0, 0.65)",
+          },
+          "50%": {
+            backgroundColor: "#f4c11a",
+            borderColor: "#ffcf32",
+            color: "#575757",
+          },
         },
+
         blink2: {
-          '0%': { "padding": " 5px 15px", "font-size": " 16px",  "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
-          '50%': { "padding": " 5px 15px", "font-size": " 16px",  "color": " #575757", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"},
-          '100%': { "padding": " 5px 15px", "font-size": " 16px",  "color": " #f8f8f8", "cursor": " pointer", "transition": " transform 0.2s, border-color 0.2s, box-shadow 0.2s", "margin": " 10px 0", "box-shadow": " 0 2px 4px rgba(134, 111, 0, 0.658)", "font-weight": " bolder", "font-size": " 1.2rem"}
-        }
+          "0%, 100%": {
+            color: "#f8f8f8",
+          },
+          "50%": {
+            color: "#575757",
+          },
+        },
       },
+
       animation: {
-        'blink-slow': 'blink1 2s infinite',
-        'blink-text': 'blink2 2s infinite'
-      }
+        "blink-slow": "blink1 2s infinite",
+        "blink-text": "blink2 2s infinite",
+      },
     },
   },
-  plugins: [],
-};
 
+  plugins: [
+    require("@tailwindcss/typography"),
+
+    // Custom utilities
+    function ({ addUtilities }) {
+      addUtilities({
+        ".hide-scrollbar": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+        ".hide-scrollbar::-webkit-scrollbar": {
+          display: "none",
+        },
+      });
+    },
+  ],
+};

@@ -48,12 +48,12 @@
 } */
 
 .lockButtonInner {
-    background-image: url(/image/Task_locked.svg);
-    cursor: pointer;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
-} 
+  background-image: url(/image/Task_locked.svg);
+  cursor: pointer;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
 /* Mystery box unlocked */
 .mysteryButtonInner {
@@ -84,13 +84,37 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  cursor: default; /* locked, not clickable */
+  cursor: default;
+  /* locked, not clickable */
 }
 
 
-  
+
 /* .lockButtonInner:hover {
   background: linear-gradient(135deg, #999, #ccc);
   transform: translate(-50%, -50%) scale(1.05);
   box-shadow: 0 0.75em 1.25em rgba(0, 0, 0, 0.3);
 } */
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0.4));
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.7));
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 0 rgba(139, 92, 246, 0.4));
+  }
+}
+
+.pulse {
+  animation: pulse 3s infinite ease-in-out;
+  border-radius: 50%;
+  /* Ensure glow follows circular shape if applicable */
+}

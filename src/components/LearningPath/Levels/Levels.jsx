@@ -88,8 +88,8 @@ const Levels = ({ unitTitle, levels, unitNumber, backgroundImageNumber, CurrentP
       // offsetX = windowWidth > mobileScreenSize ? windowWidth * 0.09148432942 : windowWidth * 0.23349822222;
       offsetX = windowWidth > mobileScreenSize ? '-45%' : windowWidth * 0.23349822222;
     }
- 
-    
+
+
     return {
       x: offsetX,
       y: offsetY,
@@ -108,9 +108,9 @@ const Levels = ({ unitTitle, levels, unitNumber, backgroundImageNumber, CurrentP
     //   return calculateOffset2(index, totalLevels, maxHorizontalOffset, maxVerticalStep)
     // }
     // if (backgroundImageNumber == 1) {
-      maxHorizontalOffset = 0.011276 * windowWidth;
-      maxVerticalStep = 0.00325520833 * windowWidth;
-      return calculateOffset1(index, totalLevels, maxHorizontalOffset, maxVerticalStep)
+    maxHorizontalOffset = 0.011276 * windowWidth;
+    maxVerticalStep = 0.00325520833 * windowWidth;
+    return calculateOffset1(index, totalLevels, maxHorizontalOffset, maxVerticalStep)
     // }
     // else {
     //   return {
@@ -130,7 +130,7 @@ const Levels = ({ unitTitle, levels, unitNumber, backgroundImageNumber, CurrentP
         // console.log("level in Learning path > levels > levels.jsx ===> ", level?.lessons[0]?.learning_journey_level?.data?.attributes?.learning_journey_unit?.data?.attributes?.learning_journey?.data?.attributes?.sequence+""+level?.lessons[0]?.learning_journey_level?.data?.attributes?.learning_journey_unit?.data?.attributes?.unitSequence+""+level?.lessons[0]?.learning_journey_level?.data?.attributes?.taskSequence)
         const totalLevels = levels.length;
         const { x: offsetX, y: offsetY } = calculateOffset(index, totalLevels);
-        const levelSeq = (level.lessons[0]?.title == "Exam") ? 0 : Number(level?.lessons[0]?.learning_journey_level?.data?.attributes?.learning_journey_unit?.data?.attributes?.learning_journey?.data?.attributes?.sequence+""+level?.lessons[0]?.learning_journey_level?.data?.attributes?.learning_journey_unit?.data?.attributes?.unitSequence+""+level?.lessons[0]?.learning_journey_level?.data?.attributes?.taskSequence)
+        const levelSeq = (level.lessons[0]?.title == "Exam") ? 0 : Number(level?.lessons[0]?.learning_journey_level?.data?.attributes?.learning_journey_unit?.data?.attributes?.learning_journey?.data?.attributes?.sequence + "" + level?.lessons[0]?.learning_journey_level?.data?.attributes?.learning_journey_unit?.data?.attributes?.unitSequence + "" + level?.lessons[0]?.learning_journey_level?.data?.attributes?.taskSequence)
         // console.log("LEVELs  LEVEL SEQ ==> ", levelSeq, CurrentProgressOfLevel, (CurrentProgressOfLevel >= levelSeq && levelSeq != 0)) 
         const isLevelOpen = CurrentProgressOfLevel >= levelSeq && levelSeq != 0
         const style = {
@@ -149,7 +149,7 @@ const Levels = ({ unitTitle, levels, unitNumber, backgroundImageNumber, CurrentP
             } */}
             <LevelButton
               level={level}
-              prevLevel={reversedLevels[index+1]}
+              prevLevel={reversedLevels[index + 1]}
               index={index}
               progress={level.progress || 0}
               onClick={() => handleOpenModal(level, isLevelOpen)}
@@ -164,7 +164,7 @@ const Levels = ({ unitTitle, levels, unitNumber, backgroundImageNumber, CurrentP
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {/* {"boom : "+JSON.stringify(reversedLevels)} */}
-          <Level unitTitle={unitTitle} {...selectedLevel} mysteryBox={isMystryBox}/>
+          <Level unitTitle={unitTitle} {...selectedLevel} mysteryBox={isMystryBox} />
         </Modal>
       )}
     </div>

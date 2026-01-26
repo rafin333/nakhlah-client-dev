@@ -41,16 +41,16 @@ const LearningPathPage = () => {
   //   }
   // }, []);
   const { t, i18n } = useTranslation("common");
-  const query = {
+  const query = React.useMemo(() => ({
     populate: "*",
     "sort[0]": "id:asc",
-  };
-  const lessonQuery = {
+  }), []);
+  const lessonQuery = React.useMemo(() => ({
     "sort[0]": "id:asc",
     "populate[learning_journey_level][populate][learning_journey_unit][populate][0]":
       "learning_journey",
     populate: "*",
-  };
+  }), []);
   const { data: learnerInfoData, isLoading } = useGetLearnerInfosQuery({
     ...query,
   });
@@ -74,7 +74,7 @@ const LearningPathPage = () => {
   console.log("learnerProgress data", learnerProgress); 
   console.log("lessonData data", lessonData);
   console.log("lessonLoading data", lessonLoading);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true); // REMOVED
   const [currentProgressInfo, setCurrentProgressInfo] = useState(0);
   const allLessonInfo = [];
   let firstLessonInfo = [];
@@ -84,16 +84,17 @@ const LearningPathPage = () => {
       
     }, []) */
 
-  console.log(currentLessonInfos);
+  // console.log(currentLessonInfos);
+  console.log("Loading flags:", { isLoading, pointerLoading, unitLoading, levelLoading, lessonLoading });
   console.log(examInfo);
   const progressId =
     learnerProgress?.[learnerProgress.length - 1]?.progressId || 41;
   useEffect(() => {
-    console.log(progressId);
+    // console.log(progressId);
     const currentLesson = lessonData?.find(
       (lesson) => lesson?.id == progressId
     );
-    console.log(currentLesson);
+    // console.log(currentLesson);
     setCurrentProgressInfo(
       Number(
         currentLesson?.attributes?.learning_journey_level?.data?.attributes
@@ -109,11 +110,11 @@ const LearningPathPage = () => {
           currentLesson?.attributes?.lessonSequence
       )
     );
-    console.log(
-      currentLesson?.attributes?.learning_journey_level?.data?.attributes
-        ?.learning_journey_unit?.data?.attributes?.learning_journey?.data
-        ?.attributes
-    );
+    // console.log(
+    //   currentLesson?.attributes?.learning_journey_level?.data?.attributes
+    //     ?.learning_journey_unit?.data?.attributes?.learning_journey?.data
+    //     ?.attributes
+    // );
     setCurrentProgressInfos({
       levelSequence:
         currentLesson?.attributes?.learning_journey_level?.data?.attributes
@@ -145,58 +146,73 @@ const LearningPathPage = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     firstLessonInfo = Math.min(...allLessonInfo);
-    console.log(" firstLessonInfo => ", firstLessonInfo, allLessonInfo);
+    // console.log(" firstLessonInfo => ", firstLessonInfo, allLessonInfo);
   }, [lessonData, learnerProgress]);
 
   useEffect(() => {
+   
     const fetchData = async () => {
-      console.log(isLoading);
+      // console.log(isLoading);
       if (!isLoading && (!learnerInfoData || learnerInfoData?.length === 0)) {
         // router.push("/query");
         console.log(learnerInfoData);
       } else {
-        console.log(learnerInfoData);
+        // console.log(learnerInfoData);
         let learner =
           learnerInfoData &&
           learnerInfoData.length > 0 &&
           learnerInfoData[learnerInfoData.length - 1];
-        console.log(learner);
+        // console.log(learner);
         if (learner) {
           let learnerInfo = {
             language: learner?.language?.name,
           };
-          console.log(learnerInfo);
+          // console.log(learnerInfo);
           storeLearnerInfo(JSON.stringify(learnerInfo));
         }
       }
+    };
+    fetchData();
+  }, [isLoading, learnerInfoData]);
 
-      
+
+  useEffect(() => {
+    // Determine unitsData using useMemo below, effectively replacing this useEffect's main purpose.
+    // However, this useEffect was also setting 'loading' state.
+    // We will now derive 'loading' from the query hooks directly and remove the artificial delay.
+  }, []);
+
+  const processedUnitsData = React.useMemo(() => {
+    if (!pointerData || !unitData || !levelData || !lessonData || isLoading || pointerLoading || unitLoading || levelLoading || lessonLoading) {
+      return [];
+    }
+
       const pointerArr = [];
-      console.log(pointerData)
+      // console.log(pointerData)
       for ( let p = 0; p < pointerData?.length; p++){
         const pointer = pointerData[p]
-        console.log(pointer)
+        // console.log(pointer)
         const unitsDataArr = [];
         for (let i = 0; i < unitData?.length; i++) {
           let backgroundImageIndex = i % 5;
           const unit = unitData[i];
-          console.log(unit)
+          // console.log(unit)
           if (unit?.attributes?.learning_journey?.data?.id === pointer?.id) {
-          console.log(i, backgroundImageIndex); 
-          console.log("LEVEL DATA _++ > ", levelData);
+          // console.log(i, backgroundImageIndex); 
+          // console.log("LEVEL DATA _++ > ", levelData);
   
           const levels = [];
           for (let j = 0; j < levelData?.length; j++) {
             const level = levelData[j];
             if (level?.attributes?.learning_journey_unit?.data?.id === unit?.id) {
-              console.log("Level Data --> ", level);
-              console.log("LESSON DATA => ", lessonData);
+              // console.log("Level Data --> ", level);
+              // console.log("LESSON DATA => ", lessonData);
   
               const lessons = [];
               for (let k = 0; k < lessonData?.length; k++) {
                 const lesson = lessonData[k];
-                console.log(lesson)
-                console.log(
+                // console.log(lesson)
+                /* console.log(
                   "aaaa",currentProgressInfo,
                   Number(
                     lesson.attributes?.learning_journey_level?.data?.attributes
@@ -211,97 +227,12 @@ const LearningPathPage = () => {
                       "" +
                       lesson.attributes?.lessonSequence
                   ) 
-                );
+                ); */
                 if (
                   lesson?.attributes?.learning_journey_level?.data?.id ===
                   level?.id
                 ) {
-                  console.log(
-                    lesson?.id,
-                    Number(
-                      lesson.attributes?.learning_journey_level?.data?.attributes
-                        ?.learning_journey_unit?.data?.attributes
-                        ?.learning_journey?.data?.attributes?.sequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.learning_journey_unit?.data?.attributes
-                          ?.unitSequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.taskSequence +
-                        "" +
-                        lesson.attributes?.lessonSequence
-                    ),
-                    currentProgressInfo,
-                    Number(
-                      lesson.attributes?.learning_journey_level?.data?.attributes
-                        ?.learning_journey_unit?.data?.attributes
-                        ?.learning_journey?.data?.attributes?.sequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.learning_journey_unit?.data?.attributes
-                          ?.unitSequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.taskSequence +
-                        "" +
-                        lesson.attributes?.lessonSequence
-                    ) <= currentProgressInfo
-                  );
-                  console.log(
-                    lesson?.id,
-                    Number(
-                      lesson.attributes?.learning_journey_level?.data?.attributes
-                        ?.learning_journey_unit?.data?.attributes
-                        ?.learning_journey?.data?.attributes?.sequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.learning_journey_unit?.data?.attributes
-                          ?.unitSequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.taskSequence +
-                        "" +
-                        lesson.attributes?.lessonSequence
-                    ),
-                    currentProgressInfo
-                  );
-                  console.log(
-                    level?.id,
-                    lesson?.id,
-                    Number(
-                      lesson.attributes?.learning_journey_level?.data?.attributes
-                        ?.learning_journey_unit?.data?.attributes
-                        ?.learning_journey?.data?.attributes?.sequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.learning_journey_unit?.data?.attributes
-                          ?.unitSequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.taskSequence +
-                        "" +
-                        lesson.attributes?.lessonSequence
-                    ) <= currentProgressInfo
-                  );
-                  console.log(
-                    level?.id,
-                    lesson?.id,
-                    Number(
-                      lesson.attributes?.learning_journey_level?.data?.attributes
-                        ?.learning_journey_unit?.data?.attributes
-                        ?.learning_journey?.data?.attributes?.sequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.learning_journey_unit?.data?.attributes
-                          ?.unitSequence +
-                        "" +
-                        lesson.attributes?.learning_journey_level?.data
-                          ?.attributes?.taskSequence +
-                        "" +
-                        lesson.attributes?.lessonSequence
-                    )
-                  );
+               
                   lessons.push({
                     id: lesson?.id,
                     icon: "🌟",
@@ -390,18 +321,18 @@ const LearningPathPage = () => {
                 }
               }
   
-              console.log(
-                "LESSONS OF A LEVEL == > ",
-                lessons,
-                lessons.length,
-                lessons[0]?.title
-              );
+              // console.log(
+              //   "LESSONS OF A LEVEL == > ",
+              //   lessons,
+              //   lessons.length,
+              //   lessons[0]?.title
+              // );
   
               const allLessonsCompleted =
                 lessons.length > 0
                   ? lessons.every((lesson) => lesson.isCompleted)
                   : false;
-              console.log(level?.id, allLessonsCompleted);
+              // console.log(level?.id, allLessonsCompleted);
               const examLesson = {
                 id: `exam-${level?.id}`,
                 icon: "📝",
@@ -410,17 +341,21 @@ const LearningPathPage = () => {
                 lessonSequence: lessons.length + 2,
                 currentLesson: progressId,
               };
-              console.log(level?.attributes?.taskSequence - 1);
+              // console.log(level?.attributes?.taskSequence - 1);
               let isExamComplete = false;
-              let previousLessonId = levels[levels.length - 1]?.id;
-              console.log(previousLessonId, level?.id);
+              let previousLessonId = levels[levels.length - 1]?.id; // Note: 'levels' here refers to the array being built which might be empty on first iteration? No, 'levels' is defined outside this loop. Wait, 'levels' is the array of levels for the unit. 
+              // Wait, previousLessonId logic seems to rely on the *previous level's* last lesson? 
+              // Actually, looking at original code: `let previousLessonId = levels[levels.length - 1]?.id;`
+              // Since we are pushing to `levels` *after* this check, `levels[levels.length - 1]` refers to the *previously processed level* in the loop.
+              
+              // console.log(previousLessonId, level?.id);
               if (examInfo && examInfo.length > 0) {
-                console.log("exam info");
-                console.log(examInfo);
+                // console.log("exam info");
+                // console.log(examInfo);
                 isExamComplete = examInfo.some(
                   (exam) => exam?.learning_journey_level?.id == previousLessonId
                 );
-                console.log(isExamComplete);
+                // console.log(isExamComplete);
               }
               if (examInfo && examInfo.length == 0 && !previousLessonId) {
                 isExamComplete = true;
@@ -428,8 +363,8 @@ const LearningPathPage = () => {
               if (levels.length == 0) {
                 isExamComplete = true;
               }
-              console.log(level.id, isExamComplete);
-              // console.log(Number(unit?.attributes?.learning_journey?.data?.attributes?.sequence + "" + unit?.attributes?.unitSequence + "" + level?.attributes?.taskSequence) <= Number(currentLessonInfos?.levelSequence + "" + currentLessonInfos?.unitSequence + "" + currentLessonInfos?.taskSequence));
+              // console.log(level.id, isExamComplete);
+              
               levels.push({
                 id: level?.id,
                 isCompleted:
@@ -451,7 +386,7 @@ const LearningPathPage = () => {
                 isExamComplete: isExamComplete,
                 level: level?.attributes?.title || "",
                 taskSequence: level?.attributes?.taskSequence,
-                levelDescription: "", // Assuming you have a description attribute to fill this
+                levelDescription: "", 
                 lessons: [...lessons, examLesson],
                 mysteryBox: level?.attributes?.mysteryBox,
                 currentLesson: progressId,
@@ -471,7 +406,6 @@ const LearningPathPage = () => {
             backgroundImageNumber: backgroundImageIndex + 1,
             currentLesson: progressId,
           });
-
         }
         }
   
@@ -481,41 +415,50 @@ const LearningPathPage = () => {
           units: unitsDataArr
         })
       }
+      return pointerArr.sort((a,b) => a.pointerSequence - b.pointerSequence);
 
-
-      setUnitsData(pointerArr.sort((a,b) => a.pointerSequence - b.pointerSequence)); 
-      console.log("POINTER DATA ==> ",pointerArr.sort((a,b) => a.pointerSequence - b.pointerSequence));
-      setLoading(false);
-    };
-
-    fetchData();
   }, [
     unitData,
     levelData,
     lessonData,
     currentProgressInfo,
-    learnerInfoData,
-    router,
+    pointerData, 
     isLoading,
+    pointerLoading, 
+    unitLoading, 
+    levelLoading, 
+    lessonLoading,
     progressId,
     examInfo,
     currentLessonInfos?.levelSequence,
     currentLessonInfos?.unitSequence,
     currentLessonInfos?.taskSequence,
   ]);
+
+  useEffect(() => {
+     if (processedUnitsData.length > 0) {
+         setUnitsData(processedUnitsData);
+     }
+  }, [processedUnitsData]); // Keep setUnitsData for compatibility if other components rely on it, OR just use processedUnitsData directly in render.
+  
+  // Actually, we can just use processedUnitsData directly in the render and remove setUnitsData state if we want to be fully clean, but let's see where unitsData is used.
+  // It is passed to <Pointers pointers={unitsData} ... />.
+  // So we can replace unitsData state with processedUnitsData usage.
+  
+
  
 
   window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 
   return (
     <div>
-      {loading || pointerLoading || unitLoading || levelLoading || lessonLoading ? (
+      {isLoading || pointerLoading || unitLoading || levelLoading || lessonLoading ? (
         <Loader />
       ) : (
         // Render Units component once data is fetched
         <>
           {/* {!isShowSteak && (
-            <Units units={unitsData} CurrentProgress={currentProgressInfo} />
+            <Units units={processedUnitsData} CurrentProgress={currentProgressInfo} />
           )}
           {isShowSteak && (
             <StreakTracker streak={7} days={days} handleContinue={handleContinue} />
@@ -528,7 +471,7 @@ const LearningPathPage = () => {
             </Modal>
           )}  */}
 
-          <Pointers pointers={unitsData} CurrentProgress={currentProgressInfo} />
+          <Pointers pointers={processedUnitsData} CurrentProgress={currentProgressInfo} />
         </>
       )}
     </div>

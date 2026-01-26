@@ -45,6 +45,10 @@ const LevelButton = ({
       prevLevel?.lessons[prevLevel?.lessons.length - 1].isCompleted &&
       level.isExamComplete);
 
+  // ✅ Determine if this is the NEXT active level for the pulse animation
+  // Check if this level is the one currently tracked by the user's progress.
+  const showPulse = isUnlocked && CurrentProgressOfLevel === buttonStatus;
+  
   return (
     <div className={styles.levelButton}>
       <div className={styles.progressWrapper}>
@@ -58,7 +62,7 @@ const LevelButton = ({
         isUnlocked ? (
           <button
             onClick={onClick}
-            className={styles.mysteryButtonInner} // 🔓 opened mystery
+            className={`${styles.mysteryButtonInner} ${showPulse ? styles.pulse : ""}`} // 🔓 opened mystery + pulse if active
             aria-label={`Open mystery box level ${level}`}
           />
         ) : (
@@ -69,7 +73,7 @@ const LevelButton = ({
         isUnlocked ? (
           <button
             onClick={onClick}
-            className={styles.levelButtonInner} // 🔓 unlocked normal level
+            className={`${styles.levelButtonInner} ${showPulse ? styles.pulse : ""}`} // 🔓 unlocked normal level + pulse if active
             aria-label={`Open level ${level}`}
           />
         ) : (
